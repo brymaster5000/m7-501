@@ -112,6 +112,7 @@ enum pageflags {
 	PG_kmalloc,			/* kmalloc pages but not slab pages*/
 	PG_kgsl,
 #endif
+	PG_readahead,		/* page in a readahead window */
 	__NR_PAGEFLAGS,
 
 	/* Filesystems */
