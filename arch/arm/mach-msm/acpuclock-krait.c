@@ -73,10 +73,17 @@ acpuclk_set_rate footprint cpu1		: phy 0x8F1F1070 : virt 0xFB600070
 acpuclk_set_rate footprint cpu2		: phy 0x8F1F1074 : virt 0xFB600074
 acpuclk_set_rate footprint cpu3		: phy 0x8F1F1078 : virt 0xFB600078
 */
-#ifdef CONFIG_LOW_CPUCLOCKS
-#define FREQ_TABLE_SIZE			39
+#ifdef CONFIG_CPU_OVERCLOCK
+#define OVERCLOCK_EXTRA_FREQS	7
 #else
-#define FREQ_TABLE_SIZE			35
+#define OVERCLOCK_EXTRA_FREQS	0
+#endif
+
+variants)
+#ifdef CONFIG_LOW_CPUCLOCKS
+#define FREQ_TABLE_SIZE		(39 + OVERCLOCK_EXTRA_FREQS)
+#else
+#define FREQ_TABLE_SIZE		(35 + OVERCLOCK_EXTRA_FREQS)
 #endif
 
 battery pe…
