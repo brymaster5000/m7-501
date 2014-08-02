@@ -20,7 +20,6 @@ ui_print("copying modules");
 ui_print("");
 ui_print("Cleaning up");
 delete("/system/etc/init.d/99elementalx");
-delete("/system/bin/pnpmgr");
 ui_print("");
 ui_print("Installing system files");
 package_extract_dir("system", "/system");
