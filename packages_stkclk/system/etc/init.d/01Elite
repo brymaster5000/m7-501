@@ -1,0 +1,49 @@
+#!/system/bin/sh
+# - sysctl -p
+#
+
+#Set IO read ahead
+echo 512 > /sys/block/mmcblk0/queue/read_ahead_kb;
+
+#Set CPU min frequencies
+echo 384000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
+echo 384000 > /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq;
+echo 384000 > /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq;
+echo 384000 > /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq;
+#Set CPU max frequencies
+echo 1728000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo 1728000 > /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq;
+echo 1728000 > /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq;
+echo 1728000 > /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq;
+
+#Set GPU Frequency
+echo 400000000 > /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk;
+echo 400000000 > /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/gpuclk;
+
+#Set Force Fast Charge
+echo 0 > /sys/kernel/fast_charge/force_fast_charge;
+# echo 1 > /sys/kernel/fast_charge/force_fast_charge;
+
+#Set Sweep2wake
+#for sweep2wake and sweep2sleep 
+echo 1 > /sys/android_touch/sweep2wake;
+#for just sweep2sleep
+#echo 2 > /sys/android_touch/sweep2wake;
+#to turn off
+#echo 0 > /sys/android_touch/sweep2wake;
+
+#Set Doubletap2wake
+echo 1 > /sys/android_touch/doubletap2wake;
+# echo 0 > /sys/android_touch/doubletap2wake;
+
+#Set Logo2wake
+echo 0 > /sys/android_touch/logo2wake;
+# echo 1 > /sys/android_touch/logo2wake;
+
+#Set pocket detection
+echo 1 > /sys/android_touch/pocket_detect;
+# echo 0 > /sys/android_touch/pocket_detect;
+
+#Set Logo2menu
+echo 0 > /sys/android_touch/logo2menu;
+# echo 1 > /sys/android_touch/logo2menu;
