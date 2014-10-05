@@ -115,6 +115,12 @@ config CPU_FREQ_DEFAULT_GOV_SMARTMAX
         help
          Use the CPUFreq governor 'smartmax' as default
 
+config CPU_FREQ_DEFAULT_GOV_OPTIMAX
+	bool "optimax"
+	select CPU_FREQ_GOV_OPTIMAX
+	select CPU_FREQ_GOV_PERFORMANCE
+	help
+	  Use the CPUFreq governor 'optimax' as default
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -230,6 +236,10 @@ config CPU_FREQ_GOV_SMARTMAX
         help
          'smartmax' combined ondemand and smartass2
 
+config CPU_FREQ_GOV_OPTIMAX
+	tristate "'optimax' cpufreq policy governor"
+	select CPU_FREQ_TABLE
+	
 menu "x86 CPU frequency scaling drivers"
 depends on X86
 source "drivers/cpufreq/Kconfig.x86"
