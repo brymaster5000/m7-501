@@ -79,14 +79,12 @@ acpuclk_set_rate footprint cpu3		: phy 0x8F1F1078 : virt 0xFB600078
 #define OVERCLOCK_EXTRA_FREQS	0
 #endif
 
-variants)
 #ifdef CONFIG_LOW_CPUCLOCKS
 #define FREQ_TABLE_SIZE		(39 + OVERCLOCK_EXTRA_FREQS)
 #else
 #define FREQ_TABLE_SIZE		(35 + OVERCLOCK_EXTRA_FREQS)
 #endif
 
-battery pe…
 #define CPU_FOOT_PRINT_MAGIC				0xACBDFE00
 static void set_acpuclk_foot_print(unsigned cpu, unsigned state)
 {
