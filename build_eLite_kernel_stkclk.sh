@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to build your kernel
-  k=~/android/kernel/m7-443
+  k=~/android/kernel/m7-501
 # Directory for the any kernel updater
   t=$k/packages_stkclk
 # Date to add to zip
