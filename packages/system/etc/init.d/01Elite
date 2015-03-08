@@ -47,3 +47,9 @@ echo 1 > /sys/android_touch/pocket_detect;
 #Set Logo2menu
 echo 0 > /sys/android_touch/logo2menu;
 # echo 1 > /sys/android_touch/logo2menu;
+
+#Set Slim governer tunables
+echo 90 > /sys/devices/system/cpu/cpufreq/slim/up_threshold
+echo 80 > /sys/devices/system/cpu/cpufreq/slim/up_threshold_multi_core
+echo 80 > /sys/devices/system/cpu/cpufreq/slim/up_threshold_any_cpu_load
+echo 0 > /sys/devices/system/cpu/cpufreq/slim/gboost
