@@ -48,6 +48,10 @@ echo 1 > /sys/android_touch/pocket_detect;
 echo 0 > /sys/android_touch/logo2menu;
 # echo 1 > /sys/android_touch/logo2menu;
 
+#Set OnDemand Tunables for battery life
+echo 0 > /sys/devices/system/cpu/cpufreq/ondemand/gboost;
+echo 1 > /sys/devices/system/cpu/cpufreq/ondemand/enable_boost_cpu;
+
 #Set Slim governer tunables
 echo 90 > /sys/devices/system/cpu/cpufreq/slim/up_threshold
 echo 80 > /sys/devices/system/cpu/cpufreq/slim/up_threshold_multi_core

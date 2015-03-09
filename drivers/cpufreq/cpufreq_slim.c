@@ -935,7 +935,7 @@ void set_two_phase_freq_by_cpu ( int cpu_nr, int cpufreq){
 	two_phase_freq_array[cpu_nr-1] = cpufreq;
 }
 
-int input_event_boosted(void)
+static int input_event_boosted(void)
 {
 	unsigned long flags;
 
@@ -1402,8 +1402,7 @@ static struct input_handler dbs_input_handler = {
 	.id_table	= dbs_ids,
 };
 
-
-void set_input_event_min_freq_by_cpu ( int cpu_nr, int cpufreq){
+static inline void set_input_event_min_freq_by_cpu ( int cpu_nr, int cpufreq){
 	input_event_min_freq_array[cpu_nr-1] = cpufreq;
 }
 static int cpufreq_governor_dbs(struct cpufreq_policy *policy,

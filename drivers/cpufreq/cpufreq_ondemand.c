@@ -126,7 +126,7 @@ static unsigned int *tblmap[TABLE_SIZE] __read_mostly;
 static unsigned int tbl_select[4];
 static unsigned int up_threshold_level[2] __read_mostly = {95, 85};
 static int input_event_counter = 0;
-struct timer_list freq_mode_timer;
+extern struct timer_list freq_mode_timer;
 
 static inline void switch_turbo_mode(unsigned);
 static inline void switch_normal_mode(void);
@@ -1062,7 +1062,7 @@ void set_two_phase_freq_by_cpu ( int cpu_nr, int cpufreq){
 }
 #endif
 
-int input_event_boosted(void)
+extern int input_event_boosted(void)
 {
 	unsigned long flags;
 
@@ -1611,7 +1611,7 @@ int set_input_event_min_freq(int cpufreq)
 	return 0;
 }
 
-void set_input_event_min_freq_by_cpu ( int cpu_nr, int cpufreq){
+extern void set_input_event_min_freq_by_cpu ( int cpu_nr, int cpufreq){
 	input_event_min_freq_array[cpu_nr-1] = cpufreq;
 }
 static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
