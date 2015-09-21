@@ -53,7 +53,6 @@ mm_segment_t oldfs;
 #define PINFO(fmt, args...) printk(KERN_INFO TAG "[I] %s(%i, %s): " fmt "\n", \
         __func__, current->pid, current->comm, ## args)
 
-
 static ssize_t kernel_write(struct file *file, const char *buf, size_t count, loff_t pos)
 {
 	mm_segment_t old_fs;

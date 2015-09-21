@@ -140,7 +140,7 @@ static void vfe_7x_ops(void *driver_data, unsigned id, size_t len,
 	rp->evt_msg.len = len;
 
 	if (id == VFE_ADSP_EVENT) {
-		
+		/* event */
 		rp->type           = VFE_EVENT;
 		rp->evt_msg.type   = MSM_CAMERA_EVT;
 		getevent(evt_buf, sizeof(evt_buf));
@@ -149,7 +149,7 @@ static void vfe_7x_ops(void *driver_data, unsigned id, size_t len,
 		resp->vfe_resp(rp, MSM_CAM_Q_VFE_EVT, vfe_syncdata,
 		GFP_ATOMIC);
 	} else {
-		
+		/* messages */
 		rp->evt_msg.type   = MSM_CAMERA_MSG;
 		rp->evt_msg.msg_id = id;
 		rp->evt_msg.data = rp + 1;
@@ -306,7 +306,7 @@ static int vfe_7x_init(struct msm_vfe_callback *presp,
 	else
 		return -EFAULT;
 
-	
+	/* Bring up all the required GPIOs and Clocks */
 	rc = msm_camio_enable(dev);
 	if (rc < 0)
 		return rc;
@@ -469,7 +469,7 @@ static int vfe_7x_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 			rc = -ENOMEM;
 			goto config_failure;
 		}
-		
+		//20140409	Buffer Copy Without Checking Size of Input
 		if (vfecmd.length > sizeof(struct vfe_stats_we_cfg)) {
 			pr_err("%s: Invalid command length %d\n", __func__,
 				(vfecmd.length));
@@ -525,7 +525,7 @@ static int vfe_7x_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 			rc = -ENOMEM;
 			goto config_failure;
 		}
-		
+		//20140409	Buffer Copy Without Checking Size of Input
 		if (vfecmd.length > sizeof(struct vfe_stats_af_cfg)) {
 			pr_err("%s: Invalid command length %d\n", __func__,
 				(vfecmd.length));
@@ -665,7 +665,7 @@ static int vfe_7x_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 			default:
 				break;
 			}
-		} 
+		} /* QDSP_CMDQUEUE */
 	}
 		break;
 	case CMD_AXI_CFG_PREVIEW:

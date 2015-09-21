@@ -1123,7 +1123,11 @@ static int read_soc_params_raw(struct pm8921_bms_chip *chip,
 			pr_info("%s: Skip adjust_pon_ocv_raw due to ocv_updated_flag=0x%x\n",
 					__func__, ocv_updated_flag);
 
-		last_ocv_uv = raw->last_good_ocv_uv;
+		
+                if (chip->ocv_backup_uv)
+			raw->last_good_ocv_uv = last_ocv_uv = chip->ocv_backup_uv;
+		else
+			last_ocv_uv = raw->last_good_ocv_uv;
 
 		pr_info("%s: last_good_ocv_raw=0x%x, last_good_ocv_uv/ori=%duV/%duV"
 				"ocv_reading_at_100=%x, cc_backup_uv=%d, ocv_backup_uv=%d, last_ocv_uv=%d\n",

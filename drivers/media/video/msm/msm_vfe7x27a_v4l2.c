@@ -27,6 +27,7 @@
 #include "msm_vfe7x27a_v4l2.h"
 #include "msm.h"
 
+/* ADSP Messages */
 #define MSG_RESET_ACK  0
 #define MSG_STOP_ACK  1
 #define MSG_SNAPSHOT  2
@@ -62,10 +63,12 @@
 #define QDSP_SCALEQUEUE 26
 #define QDSP_TABLEQUEUE 27
 
+/* ADSP Scler queue Cmd IDs */
 #define VFE_SCALE_OUTPUT1_CONFIG  0
 #define VFE_SCALE_OUTPUT2_CONFIG  1
 #define VFE_SCALE_MAX  0xFFFFFFFF
 
+/* ADSP table queue Cmd IDs */
 #define VFE_AXI_INPUT_CONFIG  0
 #define VFE_AXI_OUTPUT_CONFIG  1
 #define VFE_RGB_GAMMA_CONFIG  2
@@ -76,6 +79,7 @@
 #define VFE_DEMOSAICv3_CFG  8
 #define VFE_MAX  0xFFFFFFFF
 
+/* ADSP cfg queue cmd IDs */
 #define VFE_RESET  0
 #define VFE_START  1
 #define VFE_STOP  2
@@ -411,11 +415,11 @@ static void vfe_7x_ops(void *driver_data, unsigned id, size_t len,
 		}
 	}
 	if (id == VFE_ADSP_EVENT) {
-		
+		/* event */
 		getevent(evt_buf, sizeof(evt_buf));
 		CDBG("%s:event:msg_id=%d\n", __func__, id);
 	} else {
-		
+		/* messages */
 		getevent(data, len);
 		CDBG("%s:messages:msg_id=%d\n", __func__, id);
 
@@ -638,7 +642,7 @@ static void vfe_7x_ops(void *driver_data, unsigned id, size_t len,
 		case MSG_SOF:
 			vfe2x_ctrl->vfeFrameId++;
 			if (vfe2x_ctrl->vfeFrameId == 0)
-				vfe2x_ctrl->vfeFrameId = 1; 
+				vfe2x_ctrl->vfeFrameId = 1; /* wrapped back */
 			if ((op_mode & SNAPSHOT_MASK_MODE) && !raw_mode) {
 				pr_err("Ignore SOF for snapshot\n");
 				kfree(data);
@@ -676,7 +680,7 @@ static void vfe_7x_ops(void *driver_data, unsigned id, size_t len,
 				memcpy(((char *)cmd_data) + 4,
 					&vfe2x_ctrl->start_cmd,
 					sizeof(vfe2x_ctrl->start_cmd));
-				
+				/* Send Start cmd here */
 				len  = sizeof(vfe2x_ctrl->start_cmd) + 4;
 				msm_adsp_write(vfe_mod, QDSP_CMDQUEUE,
 						cmd_data, len);
@@ -719,7 +723,7 @@ static int vfe_7x_config_axi(int mode,
 		o_mode = SNAPSHOT_MASK_MODE;
 
 	if (mode == OUTPUT_SEC) {
-		
+		/* Thumbnail */
 		if (vfe2x_ctrl->zsl_mode) {
 			ao->output1buffer1_y_phy = ad->ping.ch_paddr[0];
 			ao->output1buffer1_cbcr_phy = ad->ping.ch_paddr[1];
@@ -748,7 +752,7 @@ static int vfe_7x_config_axi(int mode,
 			}
 		}
 	} else if (mode == OUTPUT_PRIM && o_mode != SNAPSHOT_MASK_MODE) {
-		
+		/* Preview */
 		ao->output2buffer1_y_phy = ad->ping.ch_paddr[0];
 		ao->output2buffer1_cbcr_phy = ad->ping.ch_paddr[1];
 		ao->output2buffer2_y_phy = ad->pong.ch_paddr[0];
@@ -874,7 +878,7 @@ static int vfe2x_configure_pingpong_buffers(int id, int path)
 			outch = &vfe2x_ctrl->zsl_sec;
 	}
 	if (outch->ping.ch_paddr[0] && outch->pong.ch_paddr[0]) {
-		
+		/* Configure Preview Ping Pong */
 		CDBG("%s Configure ping/pong address for %d",
 						__func__, path);
 	} else {
@@ -889,7 +893,7 @@ static struct buf_info *vfe2x_get_ch(int path)
 	struct buf_info *ch = NULL;
 
 	CDBG("path = %d op_mode = %d\n", path, op_mode);
-	
+	/* TODO: Remove Mode specific stuff */
 	if (op_mode & SNAPSHOT_MASK_MODE) {
 		if (path == VFE_MSG_OUTPUT_SECONDARY)
 			ch = &vfe2x_ctrl->thumb;
@@ -1017,7 +1021,7 @@ static long msm_vfe_subdev_ioctl(struct v4l2_subdev *sd,
 			rc = -ENOMEM;
 			goto config_failure;
 		}
-		
+		//20140409	Buffer Copy Without Checking Size of Input
 		if (vfecmd.length > sizeof(struct vfe_stats_we_cfg) - 4) {
 			pr_err("%s: Invalid command length %d\n", __func__,
 				(vfecmd.length));
@@ -1081,7 +1085,7 @@ static long msm_vfe_subdev_ioctl(struct v4l2_subdev *sd,
 			rc = -ENOMEM;
 			goto config_failure;
 		}
-		
+		//20140409	Buffer Copy Without Checking Size of Input
 		if (vfecmd.length > sizeof(struct vfe_stats_af_cfg) - 4) {
 			pr_err("%s: Invalid command length %d\n", __func__,
 				(vfecmd.length));
@@ -1243,7 +1247,7 @@ static long msm_vfe_subdev_ioctl(struct v4l2_subdev *sd,
 			default:
 				break;
 			}
-		} 
+		} /* QDSP_CMDQUEUE */
 	}
 		break;
 	case CMD_AXI_CFG_SEC: {
@@ -1630,7 +1634,7 @@ int msm_vfe_subdev_init(struct v4l2_subdev *sd, void *data,
 
 	msm_camio_set_perf_lvl(S_INIT);
 
-	
+	/* TODO : check is it required */
 	extlen = sizeof(struct vfe_frame_extra);
 
 	extdata = kmalloc(extlen, GFP_ATOMIC);

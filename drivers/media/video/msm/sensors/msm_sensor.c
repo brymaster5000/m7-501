@@ -696,10 +696,14 @@ int32_t msm_sensor_setting_parallel(struct msm_sensor_ctrl_t *s_ctrl,
 	pr_info("%s: update_type=%d, res=%d\n", __func__, update_type, res);
 
 	if (update_type == MSM_SENSOR_REG_INIT) {
-		if (s_ctrl->first_init)   {
-			pr_info("%s: MSM_SENSOR_REG_INIT already inited\n", __func__);
-			return rc;
+		if(s_ctrl->sensor_id_info->sensor_id != 0x4581){
+		
+			if (s_ctrl->first_init)   {
+				pr_info("%s: MSM_SENSOR_REG_INIT already inited\n", __func__);
+				return rc;
+			}
 		}
+
 		mutex_lock(s_ctrl->sensor_first_mutex);  
 
 #ifdef CONFIG_RAWCHIPII
