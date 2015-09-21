@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to build your kernel
-  k=~/android/kernel/m7-501
+  k=~/android/kernel/Elite_m7
 # Directory for the any kernel updater
   t=$k/packages
 # Date to add to zip
@@ -27,7 +27,7 @@
   m=$k/out/$c/system/lib/modules
   z=$c-$today
 
-TOOLCHAIN=/home/brymaster5000/android/kernel/Linaro-4.9.2/bin/arm-cortex_a15-linux-gnueabihf-
+TOOLCHAIN=/home/brymaster5000/android/Toolchains/linaro-4.9.4/bin/arm-cortex_a15-linux-gnueabihf-
 export ARCH=arm
 export SUBARCH=arm
 
