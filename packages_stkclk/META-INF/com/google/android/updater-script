@@ -8,7 +8,7 @@ ui_print(" |  __| | |    | |   | |   |  __| ");
 ui_print(" | |__  | |__  | |   | |   | |__  ");
 ui_print(" |____| |____| |_|   |_|   |____| ");
 
-ui_print("Flashing Elite Kernel for Sense 502");
+ui_print("Flashing Elite Kernel for m7 5.1");
 ui_print("By Brymaster5000");
 ui_print("");
 ui_print("");
